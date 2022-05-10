@@ -11,82 +11,66 @@ enum Section {
     case trendingSection
 }
 
-class TrendingVC: UIViewController, UITableViewDelegate {
+class TrendingVC: UIViewController {
+    
+    private let trendingViewModel = TrendingViewModel()
     
     let trendingTableView = UITableView()
     var diffableDataSource : UITableViewDiffableDataSource<Section, Result>!
-    
-    var trendingMovies: [Result] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        trendingViewModel.delegate = self
+        trendingViewModel.getTrendingMovies()
         
-        getTrendingMovies()
         configureTableview()
     }
 }
 
-
 // MARK: TableView Configuration
-extension TrendingVC {
+extension TrendingVC : UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         trendingTableView.deselectRow(at: indexPath, animated: true)
-        guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else {
-            return
-        }
-        print(selectedItem.title!)
+        guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
+        trendingViewModel.didTapMovieCell(movieID: selectedItem.id)
+        // present movie detail view controller
+        navigationController?.pushViewController(MovieDetailVC(movie: selectedItem ,movieID: selectedItem.id, name: selectedItem.title!), animated: true)
     }
     
     func configureTableview() {
         diffableDataSource = UITableViewDiffableDataSource(tableView: trendingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             
-            let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath)
-            cell.textLabel?.text = itemIdentifier.title
+            let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath) as! MovieCustomCell
+            cell.titleLabel.text = itemIdentifier.title
+            cell.popularity.text = String(itemIdentifier.popularity)
+            cell.getPosterFromURL(posterPath: itemIdentifier.posterPath)
             return cell
         })
         
         trendingTableView.delegate = self
-        trendingTableView.register(UITableViewCell.self, forCellReuseIdentifier: "trendingCell")
+        trendingTableView.register(MovieCustomCell.self, forCellReuseIdentifier: "trendingCell")
         trendingTableView.frame = view.bounds
         trendingTableView.translatesAutoresizingMaskIntoConstraints = false
+        trendingTableView.rowHeight = 310
         view.addSubview(trendingTableView)
     }
     
     func updateDataSource() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Result>()
         snapshot.appendSections([.trendingSection])
-        snapshot.appendItems(trendingMovies)
-        
+        snapshot.appendItems(self.trendingViewModel.trendingMovies)
         diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
     }
 }
 
-// MARK: Network calls
-extension TrendingVC {
-    func getTrendingMovies() {
-        NetworkManager.shared.getTrendingMovies(contentType: .movie, timePeriod: .week) { result in
-            switch result {
-            case .success(let movies):
-                self.trendingMovies = movies.results
-                DispatchQueue.main.async {
-                    self.updateDataSource()
-                }
-            case .failure(let error):
-                print(error)
-        }
+extension TrendingVC: TrendingVMDelegate {
+    func didFetchTrendingMovies() {
+        DispatchQueue.main.async { self.updateDataSource() }
     }
-}
     
-    func getMovie(id: Int) {
-        NetworkManager.shared.getMovieByID(movieID: id) { result in
-            switch result {
-            case .success(let movie):
-                print(movie)
-            case .failure(let error):
-                print(error)
-            }
-        }
+    func didFetchMovieDetails() {
+//        print("tık")
     }
 }

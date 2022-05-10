@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate let apiKey = "499ba6f1ac8132dc1bf6b8047c0cb1d8"
-fileprivate let baseUrl = URL(string: "https://api.themoviedb.org/3")!
+fileprivate let baseURL = URL(string: "https://api.themoviedb.org/3")!
+fileprivate let posterBaseURL = "https://image.tmdb.org/t/p/original/"
 
 
 enum trendingMediaType : String {
@@ -29,7 +31,7 @@ class NetworkManager {
     
     func getTrendingMovies(contentType mediatype: trendingMediaType, timePeriod timeWindow: trendingTimeWindow, completed: @escaping (Swift.Result<Movies, Error>) -> Void) {
         
-        let endpoint = "\(baseUrl)/trending/\(mediatype)/\(timeWindow)?api_key=\(apiKey)"
+        let endpoint = "\(baseURL)/trending/\(mediatype)/\(timeWindow)?api_key=\(apiKey)"
         
         guard let url = URL(string: endpoint) else { return }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -51,7 +53,7 @@ class NetworkManager {
     
     func getMovieByID(movieID id: Int, completed: @escaping (Swift.Result<Movie, Error>) -> Void) {
         
-        let endpoint = "\(baseUrl)/movie/\(id)?api_key=\(apiKey)"
+        let endpoint = "\(baseURL)/movie/\(id)?api_key=\(apiKey)"
         guard let url = URL(string: endpoint) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -71,6 +73,23 @@ class NetworkManager {
         task.resume()
     }
     
+    // GET Poster image for specific movie
+    func getPosterImage(posterPath: String, completion: @escaping (UIImage) -> ()) {
+        
+        let url: String = posterBaseURL + posterPath
+        
+        guard let url = URL(string: url) else {
+            return
+        }
+        
+        let img = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data, error == nil else {
+                return
+            }
+            completion(UIImage(data: data)!)
+        }
+        img.resume()
+    }
 }
 
 

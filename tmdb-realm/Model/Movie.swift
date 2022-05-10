@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Movie: Codable, Hashable {
     let adult: Bool
