@@ -36,7 +36,7 @@ extension TrendingVC : UITableViewDelegate{
         guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
         trendingViewModel.didTapMovieCell(movieID: selectedItem.id)
         // present movie detail view controller
-        navigationController?.pushViewController(MovieDetailVC(movie: selectedItem ,movieID: selectedItem.id, name: selectedItem.title!), animated: true)
+        navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
     }
     
     func configureTableview() {

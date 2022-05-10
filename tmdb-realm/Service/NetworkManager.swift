@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate let apiKey = "499ba6f1ac8132dc1bf6b8047c0cb1d8"
 fileprivate let baseURL = URL(string: "https://api.themoviedb.org/3")!
-fileprivate let posterBaseURL = "https://image.tmdb.org/t/p/original/"
+fileprivate let imgBaseURL = "https://image.tmdb.org/t/p/original/"
 
 
 enum trendingMediaType : String {
@@ -76,7 +76,25 @@ class NetworkManager {
     // GET Poster image for specific movie
     func getPosterImage(posterPath: String, completion: @escaping (UIImage) -> ()) {
         
-        let url: String = posterBaseURL + posterPath
+        let url: String = imgBaseURL + posterPath
+        
+        guard let url = URL(string: url) else {
+            return
+        }
+        
+        let img = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data, error == nil else {
+                return
+            }
+            completion(UIImage(data: data)!)
+        }
+        img.resume()
+    }
+    
+    // GET Backdrop image for specific movie
+    func getBackdropImage(backdropPath: String, completion: @escaping (UIImage) -> ()) {
+        
+        let url: String = imgBaseURL + backdropPath
         
         guard let url = URL(string: url) else {
             return
