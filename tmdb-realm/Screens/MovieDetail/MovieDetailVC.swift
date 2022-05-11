@@ -14,6 +14,7 @@ class MovieDetailVC: UIViewController {
     var titleName = UILabel()
     var releaseDate = UILabel()
     var overview = UILabel()
+    var voteAverage = UILabel()
     let addToFavoritesButton = UIButton()
 //    let video = AVPlayer
     let scrollView = UIScrollView()
@@ -41,7 +42,8 @@ class MovieDetailVC: UIViewController {
     // Set properties
     func setProperties() {
         titleName.text = movie.title
-        overview.text = movie.overview //+ movie.overview + movie.overview + movie.overview
+        overview.text = movie.overview // + movie.overview + movie.overview + movie.overview
+        voteAverage.text = "Score: \(String(movie.voteAverage))"
         releaseDate.text = "Release Date: \(movie.releaseDate!)"
     }
     
@@ -53,6 +55,7 @@ class MovieDetailVC: UIViewController {
         scrollView.addSubview(titleName)
         scrollView.addSubview(overview)
         scrollView.addSubview(releaseDate)
+        scrollView.addSubview(voteAverage)
         scrollView.addSubview(addToFavoritesButton)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +63,7 @@ class MovieDetailVC: UIViewController {
         backdropImage.translatesAutoresizingMaskIntoConstraints = false
         titleName.translatesAutoresizingMaskIntoConstraints = false
         releaseDate.translatesAutoresizingMaskIntoConstraints = false
+        voteAverage.translatesAutoresizingMaskIntoConstraints = false
         overview.translatesAutoresizingMaskIntoConstraints = false
         addToFavoritesButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,8 +82,7 @@ class MovieDetailVC: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            scrollView.heightAnchor.constraint(equalToConstant: 0),
-            
+
             titleName.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
             titleName.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
             titleName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
@@ -89,8 +92,12 @@ class MovieDetailVC: UIViewController {
             overview.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
             
             releaseDate.topAnchor.constraint(equalTo: overview.bottomAnchor, constant: 24),
-            releaseDate.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
-            releaseDate.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
+            releaseDate.leadingAnchor.constraint(equalTo: voteAverage.trailingAnchor, constant: 10),
+            releaseDate.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -12),
+            
+            voteAverage.topAnchor.constraint(equalTo: overview.bottomAnchor, constant: 24),
+            voteAverage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 12),
+            voteAverage.trailingAnchor.constraint(equalTo: releaseDate.leadingAnchor, constant: -10),
             
             addToFavoritesButton.topAnchor.constraint(equalTo: releaseDate.bottomAnchor, constant: 4),
             addToFavoritesButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
@@ -99,10 +106,7 @@ class MovieDetailVC: UIViewController {
         
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        
-//        scrollView.isUserInteractionEnabled = true
-//        scrollView.isScrollEnabled = true
-//        scrollView.contentSize = CGSize(width: 200, height: 700)
+
         scrollView.layoutIfNeeded()
         scrollView.isScrollEnabled = true
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: scrollView.frame.size.height)
@@ -124,12 +128,18 @@ class MovieDetailVC: UIViewController {
         releaseDate.textAlignment = .right
         releaseDate.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         releaseDate.textColor = .systemGray3
+        
+        voteAverage.numberOfLines = 1
+        voteAverage.textAlignment = .left
+        voteAverage.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        voteAverage.textColor = .systemGray3
     
         addToFavoritesButton.setTitle("Add to Favorites", for: .normal)
         addToFavoritesButton.backgroundColor = .systemPink
         addToFavoritesButton.layer.cornerRadius = 8
         
     }
+    
     // Network Call
     func getBackdropFromURL(backdropPath: String){
         NetworkManager.shared.getBackdropImage(backdropPath: backdropPath) { image in
