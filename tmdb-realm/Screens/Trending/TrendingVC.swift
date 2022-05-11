@@ -22,7 +22,7 @@ class TrendingVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         trendingViewModel.delegate = self
-        trendingViewModel.getTrendingMovies()
+        trendingViewModel.getTrendingMovies(completion: updateDataSource)
         
         configureTableview()
     }
@@ -34,8 +34,8 @@ extension TrendingVC : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         trendingTableView.deselectRow(at: indexPath, animated: true)
         guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
+        
         trendingViewModel.didTapMovieCell(movieID: selectedItem.id)
-        // present movie detail view controller
         navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
     }
     

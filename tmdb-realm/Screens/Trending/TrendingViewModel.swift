@@ -24,12 +24,13 @@ final class TrendingViewModel {
     }
     
     // Network Calls
-    func getTrendingMovies() {
+    func getTrendingMovies(completion: @escaping () -> ()) {
         NetworkManager.shared.getTrendingMovies(contentType: .movie, timePeriod: .week) { result in
             switch result {
             case .success(let movies):
                 self.trendingMovies = movies.results
-                self.delegate?.didFetchTrendingMovies()
+//                self.delegate?.didFetchTrendingMovies()
+                completion()
             case .failure(let error):
                 print(error)
             }

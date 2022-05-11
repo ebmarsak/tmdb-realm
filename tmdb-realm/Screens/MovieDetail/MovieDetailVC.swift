@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import AVFoundation
+//import AVFoundation
 
 class MovieDetailVC: UIViewController {
 
@@ -16,6 +16,8 @@ class MovieDetailVC: UIViewController {
     var overview = UILabel()
     let addToFavoritesButton = UIButton()
 //    let video = AVPlayer
+    let scrollView = UIScrollView()
+    let stackView = UIStackView()
     
     var movie: Result
     
@@ -35,21 +37,26 @@ class MovieDetailVC: UIViewController {
         setProperties()
         configLayout()
     }
+    
     // Set properties
     func setProperties() {
         titleName.text = movie.title
-        overview.text = movie.overview
+        overview.text = movie.overview //+ movie.overview + movie.overview + movie.overview
         releaseDate.text = "Release Date: \(movie.releaseDate!)"
     }
     
     // Config Layout
     func configLayout() {
-        view.addSubview(backdropImage)
-        view.addSubview(titleName)
-        view.addSubview(overview)
-        view.addSubview(releaseDate)
-        view.addSubview(addToFavoritesButton)
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(backdropImage)
+        stackView.addArrangedSubview(scrollView)
+        scrollView.addSubview(titleName)
+        scrollView.addSubview(overview)
+        scrollView.addSubview(releaseDate)
+        scrollView.addSubview(addToFavoritesButton)
         
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         backdropImage.translatesAutoresizingMaskIntoConstraints = false
         titleName.translatesAutoresizingMaskIntoConstraints = false
         releaseDate.translatesAutoresizingMaskIntoConstraints = false
@@ -57,30 +64,52 @@ class MovieDetailVC: UIViewController {
         addToFavoritesButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            backdropImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            backdropImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backdropImage.heightAnchor.constraint(equalToConstant: view.bounds.width),
-            backdropImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            titleName.topAnchor.constraint(equalTo: backdropImage.bottomAnchor, constant: 10),
-            titleName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            titleName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            backdropImage.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor),
+            backdropImage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            backdropImage.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            backdropImage.heightAnchor.constraint(equalToConstant: stackView.bounds.width),
+            
+            scrollView.topAnchor.constraint(equalTo: backdropImage.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//            scrollView.heightAnchor.constraint(equalToConstant: 0),
+            
+            titleName.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            titleName.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
+            titleName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
             
             overview.topAnchor.constraint(equalTo: titleName.bottomAnchor, constant: 8),
-            overview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            overview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            overview.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
+            overview.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
             
             releaseDate.topAnchor.constraint(equalTo: overview.bottomAnchor, constant: 24),
-            releaseDate.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            releaseDate.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            releaseDate.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
+            releaseDate.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
             
             addToFavoritesButton.topAnchor.constraint(equalTo: releaseDate.bottomAnchor, constant: 4),
-            addToFavoritesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            addToFavoritesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            addToFavoritesButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10),
+            addToFavoritesButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
         ])
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        
+//        scrollView.isUserInteractionEnabled = true
+//        scrollView.isScrollEnabled = true
+//        scrollView.contentSize = CGSize(width: 200, height: 700)
+        scrollView.layoutIfNeeded()
+        scrollView.isScrollEnabled = true
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: scrollView.frame.size.height)
         
         backdropImage.contentMode = .scaleAspectFill
         backdropImage.clipsToBounds = true
+        backdropImage.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         
         titleName.numberOfLines = 0
         titleName.lineBreakStrategy = .standard
