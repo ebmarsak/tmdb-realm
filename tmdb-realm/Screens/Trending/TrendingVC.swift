@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 enum Section {
     case trendingSection
@@ -13,6 +14,8 @@ enum Section {
 }
 
 class TrendingVC: UIViewController {
+    
+    let realm = try! Realm()
     
     private let trendingViewModel = TrendingViewModel()
     
@@ -48,6 +51,7 @@ extension TrendingVC : UITableViewDelegate{
             cell.voteAverage.setTitle(" \(String(itemIdentifier.voteAverage)) ", for: .normal)
             cell.getPosterFromURL(posterPath: itemIdentifier.posterPath)
             
+            // vote average check
             if itemIdentifier.voteAverage < 4.0 {
                 cell.voteAverage.setTitleColor(.systemRed, for: .normal)
             } else if itemIdentifier.voteAverage < 7.0 {
@@ -57,6 +61,9 @@ extension TrendingVC : UITableViewDelegate{
             } else {
                 cell.voteAverage.setTitleColor(.systemGreen, for: .normal)
             }
+            
+            // isAlreadyFavorite check
+            cell.alreadyFavoritedButton.isHidden = self.isAlreadyInFavorites(id: itemIdentifier.id)
             
             return cell
         })
@@ -83,6 +90,12 @@ extension TrendingVC: TrendingVMDelegate {
     }
     
     func didFetchMovieDetails() {
-//        print("tık")
     }
 }
+
+extension TrendingVC: FavoritesVCDelegate {
+    func isAlreadyInFavorites(id: Int) -> Bool {
+        return realm.object(ofType: RLMMovie.self, forPrimaryKey: id) == nil
+    }
+}
+

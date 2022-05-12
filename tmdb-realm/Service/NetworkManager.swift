@@ -28,6 +28,29 @@ class NetworkManager {
     
     static let shared = NetworkManager()
     
+    // GET search results
+    func getSearchResults(query: String, page: Int, completed: @escaping (Swift.Result<TrendingMovies, Error>) -> Void) {
+        
+        let endpoint = "\(baseURL)/search/movie?api_key=\(apiKey)&language=en-US&query=\(query)&page=\(page)"
+        
+        guard let url = URL(string: endpoint) else { return }
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
+            if let _ = error { return }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                let searchResult = try decoder.decode(TrendingMovies.self, from: data)
+                completed(.success(searchResult))
+            } catch {
+                return
+            }
+        }
+        task.resume()
+    }
+    
     // GET trending movies
     func getTrendingMovies(contentType mediatype: trendingMediaType, timePeriod timeWindow: trendingTimeWindow, completed: @escaping (Swift.Result<TrendingMovies, Error>) -> Void) {
         

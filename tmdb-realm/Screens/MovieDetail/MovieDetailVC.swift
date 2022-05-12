@@ -156,7 +156,6 @@ class MovieDetailVC: UIViewController {
             movie.title = self.movie.title!
             movie.id = self.movie.id
             movie.poster = self.movie.posterPath
-//            movie.addedDate = Date()
             realm.add(movie, update: .modified)
             print("Name: \(movie.title) ID: \(movie.id) || Added to realm")
         })

@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MovieCustomCell: UITableViewCell {
+    
+    let realm = try! Realm()
     
     let titleLabel = UILabel()
     var voteAverage = UIButton()
 //    let releaseDate = UILabel()
     let poster = UIImageView()
     let alreadyFavoritedButton = UIButton()
+    var isAlreadyInFavorites: Bool = true
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +37,8 @@ class MovieCustomCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        titleLabel.text = ""
+        voteAverage.titleLabel?.text = ""
         poster.image = nil
     }
     
@@ -65,7 +71,7 @@ class MovieCustomCell: UITableViewCell {
         alreadyFavoritedButton.backgroundColor = .systemGreen
         alreadyFavoritedButton.setTitle(" On your favorites list! ", for: .normal)
         alreadyFavoritedButton.layer.cornerRadius = 10
-        
+
         let padding: CGFloat = 10.0
         
         NSLayoutConstraint.activate([
@@ -93,5 +99,15 @@ class MovieCustomCell: UITableViewCell {
                 self.poster.image = image
             }
         }
+    }
+    
+    func checkFavorite(id: Int) -> Bool {
+        return realm.object(ofType: RLMMovie.self, forPrimaryKey: id) != nil
+    }
+}
+
+extension MovieCustomCell: MovieDetailDelegate {
+    func didAddNewItem() {
+        alreadyFavoritedButton.isHidden = false
     }
 }

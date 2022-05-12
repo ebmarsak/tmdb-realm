@@ -8,12 +8,17 @@
 import UIKit
 import RealmSwift
 
+protocol FavoritesVCDelegate : AnyObject {
+    func isAlreadyInFavorites(id: Int) -> Bool
+}
+
 class FavoritesVC: UIViewController {
     
     let favoritesTableView = UITableView()
     var diffableDataSource : UITableViewDiffableDataSource<Section, RLMMovie>!
     
     let realm = try! Realm()
+    weak var delegate: FavoritesVCDelegate?
     
     var favoriteMovies: [RLMMovie] = []
     
@@ -22,7 +27,7 @@ class FavoritesVC: UIViewController {
         view.backgroundColor = .systemBackground
         self.title = "Favorites"
         
-        var realmData = realm.objects(RLMMovie.self)
+        let realmData = realm.objects(RLMMovie.self)
         favoriteMovies = Array(realmData)
         
         configureTableview()
@@ -42,6 +47,7 @@ extension FavoritesVC: UITableViewDelegate {
             cell.id = itemIdentifier.id
             cell.titleLabel.text = itemIdentifier.title
             cell.getPosterFromURL(posterPath: itemIdentifier.poster)
+//            self.delegate?.isAlreadyInFavorites(id: itemIdentifier.id)
             return cell
         })
         
