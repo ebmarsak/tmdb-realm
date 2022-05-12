@@ -1,15 +1,15 @@
 //
-//  Movie.swift
+//  TrendingMovies.swift
 //  tmdb-realm
 //
-//  Created by Emre Beytullah Marsak  on 6.05.2022.
+//  Created by Emre Beytullah Marsak  on 11.05.2022.
 //
 
 import Foundation
-import RealmSwift
+
 
 // MARK: - TrendingMovies
-struct Movies: Codable, Hashable {
+struct TrendingMovies: Codable, Hashable {
     let page: Int
     let results: [Result]
     let totalPages: Int

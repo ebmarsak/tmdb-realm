@@ -10,8 +10,10 @@ import UIKit
 class MovieCustomCell: UITableViewCell {
     
     let titleLabel = UILabel()
-    var popularity = UILabel()
+    var voteAverage = UIButton()
+//    let releaseDate = UILabel()
     let poster = UIImageView()
+    let alreadyFavoritedButton = UIButton()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,32 +28,43 @@ class MovieCustomCell: UITableViewCell {
         configSubviews()
     }
     
-    override func prepareForReuse() {
-        poster.image = nil
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        poster.image = nil
     }
     
     private func configSubviews() {
         addSubview(poster)
         addSubview(titleLabel)
-        addSubview(popularity)
+        addSubview(voteAverage)
+//        addSubview(releaseDate)
+        addSubview(alreadyFavoritedButton)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        popularity.translatesAutoresizingMaskIntoConstraints = false
+        voteAverage.translatesAutoresizingMaskIntoConstraints = false
         poster.translatesAutoresizingMaskIntoConstraints = false
-        
-        poster.translatesAutoresizingMaskIntoConstraints = false
+        alreadyFavoritedButton.translatesAutoresizingMaskIntoConstraints = false
+
         poster.layer.cornerRadius = 10
         poster.clipsToBounds = true
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .left
-        titleLabel.numberOfLines = 3
         titleLabel.lineBreakStrategy = .standard
+        titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
+        
+        voteAverage.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        voteAverage.setTitleColor(.systemOrange, for: .normal)
+        voteAverage.backgroundColor = .tertiarySystemFill
+        voteAverage.layer.cornerRadius = 8
+        
+        alreadyFavoritedButton.backgroundColor = .systemGreen
+        alreadyFavoritedButton.setTitle(" On your favorites list! ", for: .normal)
+        alreadyFavoritedButton.layer.cornerRadius = 10
         
         let padding: CGFloat = 10.0
         
@@ -65,8 +78,12 @@ class MovieCustomCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
 
-            popularity.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
-            popularity.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 0),
+            voteAverage.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
+            voteAverage.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 0),
+            
+            alreadyFavoritedButton.bottomAnchor.constraint(equalTo: poster.bottomAnchor, constant: 0),
+            alreadyFavoritedButton.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: padding),
+            alreadyFavoritedButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding)
         ])
     }
     

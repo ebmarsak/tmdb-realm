@@ -9,6 +9,7 @@ import UIKit
 
 enum Section {
     case trendingSection
+    case favoritesSection
 }
 
 class TrendingVC: UIViewController {
@@ -44,8 +45,19 @@ extension TrendingVC : UITableViewDelegate{
             
             let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath) as! MovieCustomCell
             cell.titleLabel.text = itemIdentifier.title
-            cell.popularity.text = String(itemIdentifier.popularity)
+            cell.voteAverage.setTitle(" \(String(itemIdentifier.voteAverage)) ", for: .normal)
             cell.getPosterFromURL(posterPath: itemIdentifier.posterPath)
+            
+            if itemIdentifier.voteAverage < 4.0 {
+                cell.voteAverage.setTitleColor(.systemRed, for: .normal)
+            } else if itemIdentifier.voteAverage < 7.0 {
+                cell.voteAverage.setTitleColor(.systemOrange, for: .normal)
+            } else if itemIdentifier.voteAverage < 8.0 {
+                cell.voteAverage.setTitleColor(.systemYellow, for: .normal)
+            } else {
+                cell.voteAverage.setTitleColor(.systemGreen, for: .normal)
+            }
+            
             return cell
         })
         

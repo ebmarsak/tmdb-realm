@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
 //import AVFoundation
 
+protocol MovieDetailDelegate : AnyObject {
+    func didAddNewItem()
+}
+
 class MovieDetailVC: UIViewController {
+    
+    weak var delegate: MovieDetailDelegate?
+    let realm = try! Realm()
 
     var backdropImage = UIImageView()
     var titleName = UILabel()
@@ -137,7 +145,22 @@ class MovieDetailVC: UIViewController {
         addToFavoritesButton.setTitle("Add to Favorites", for: .normal)
         addToFavoritesButton.backgroundColor = .systemPink
         addToFavoritesButton.layer.cornerRadius = 8
+        addToFavoritesButton.addTarget(self, action: #selector(didTapAddToFavorites), for: .touchUpInside)
         
+    }
+    
+    // Button Functions
+    @objc func didTapAddToFavorites() {
+        try! realm.write({
+            let movie = RLMMovie()
+            movie.title = self.movie.title!
+            movie.id = self.movie.id
+            movie.poster = self.movie.posterPath
+//            movie.addedDate = Date()
+            realm.add(movie, update: .modified)
+            print("Name: \(movie.title) ID: \(movie.id) || Added to realm")
+        })
+        self.delegate?.didAddNewItem()
     }
     
     // Network Call

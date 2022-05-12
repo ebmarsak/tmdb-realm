@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol TrendingVMDelegate : AnyObject {
     func didFetchTrendingMovies()
@@ -15,6 +16,7 @@ protocol TrendingVMDelegate : AnyObject {
 final class TrendingViewModel {
     
     weak var delegate: TrendingVMDelegate?
+    let realm = try! Realm()
     
     var trendingMovies: [Result] = []
 

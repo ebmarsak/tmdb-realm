@@ -9,9 +9,8 @@ import Foundation
 import UIKit
 
 fileprivate let apiKey = "499ba6f1ac8132dc1bf6b8047c0cb1d8"
-fileprivate let baseURL = URL(string: "https://api.themoviedb.org/3")!
+fileprivate let baseURL = "https://api.themoviedb.org/3"
 fileprivate let imgBaseURL = "https://image.tmdb.org/t/p/original/"
-
 
 enum trendingMediaType : String {
     case all = "all"
@@ -29,7 +28,8 @@ class NetworkManager {
     
     static let shared = NetworkManager()
     
-    func getTrendingMovies(contentType mediatype: trendingMediaType, timePeriod timeWindow: trendingTimeWindow, completed: @escaping (Swift.Result<Movies, Error>) -> Void) {
+    // GET trending movies
+    func getTrendingMovies(contentType mediatype: trendingMediaType, timePeriod timeWindow: trendingTimeWindow, completed: @escaping (Swift.Result<TrendingMovies, Error>) -> Void) {
         
         let endpoint = "\(baseURL)/trending/\(mediatype)/\(timeWindow)?api_key=\(apiKey)"
         
@@ -42,7 +42,7 @@ class NetworkManager {
             
             do {
                 let decoder = JSONDecoder()
-                let movies = try decoder.decode(Movies.self, from: data)
+                let movies = try decoder.decode(TrendingMovies.self, from: data)
                 completed(.success(movies))
             } catch {
                 return
@@ -51,6 +51,7 @@ class NetworkManager {
         task.resume()
     }
     
+    // GET movie by ID
     func getMovieByID(movieID id: Int, completed: @escaping (Swift.Result<Movie, Error>) -> Void) {
         
         let endpoint = "\(baseURL)/movie/\(id)?api_key=\(apiKey)"
@@ -73,7 +74,7 @@ class NetworkManager {
         task.resume()
     }
     
-    // GET Poster image for specific movie
+    // GET Poster image for a movie with posterPath
     func getPosterImage(posterPath: String, completion: @escaping (UIImage) -> ()) {
         
         let url: String = imgBaseURL + posterPath
@@ -91,7 +92,7 @@ class NetworkManager {
         img.resume()
     }
     
-    // GET Backdrop image for specific movie
+    // GET Backdrop image for a movie with backdropPath
     func getBackdropImage(backdropPath: String, completion: @escaping (UIImage) -> ()) {
         
         let url: String = imgBaseURL + backdropPath
