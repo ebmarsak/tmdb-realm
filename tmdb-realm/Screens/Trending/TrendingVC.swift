@@ -11,6 +11,7 @@ import RealmSwift
 enum Section {
     case trendingSection
     case favoritesSection
+    case searchSection
 }
 
 class TrendingVC: UIViewController {

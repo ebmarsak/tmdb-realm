@@ -29,7 +29,7 @@ class NetworkManager {
     static let shared = NetworkManager()
     
     // GET search results
-    func getSearchResults(query: String, page: Int, completed: @escaping (Swift.Result<TrendingMovies, Error>) -> Void) {
+    func getSearchResults(query: String, page: Int, completed: @escaping (Swift.Result<SearchResult, Error>) -> Void) {
         
         let endpoint = "\(baseURL)/search/movie?api_key=\(apiKey)&language=en-US&query=\(query)&page=\(page)"
         
@@ -42,7 +42,7 @@ class NetworkManager {
             
             do {
                 let decoder = JSONDecoder()
-                let searchResult = try decoder.decode(TrendingMovies.self, from: data)
+                let searchResult = try decoder.decode(SearchResult.self, from: data)
                 completed(.success(searchResult))
             } catch {
                 return
