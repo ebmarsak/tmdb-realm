@@ -58,6 +58,7 @@ class MovieCustomCell: UITableViewCell {
         poster.clipsToBounds = true
         
         titleLabel.adjustsFontSizeToFitWidth = true
+//        titleLabel.textColor = UIColor.purple
         titleLabel.textAlignment = .left
         titleLabel.lineBreakStrategy = .standard
         titleLabel.numberOfLines = 0
@@ -68,9 +69,18 @@ class MovieCustomCell: UITableViewCell {
         voteAverage.backgroundColor = .tertiarySystemFill
         voteAverage.layer.cornerRadius = 8
         
-        alreadyFavoritedButton.backgroundColor = .systemGreen
-        alreadyFavoritedButton.setTitle(" On your favorites list! ", for: .normal)
-        alreadyFavoritedButton.layer.cornerRadius = 10
+//        alreadyFavoritedButton.backgroundColor = .systemGreen
+//        alreadyFavoritedButton.setTitle(" On your favorites list! ", for: .normal)
+//        alreadyFavoritedButton.layer.cornerRadius = 10
+        
+        var btnConfig = UIButton.Configuration.tinted()
+        btnConfig.cornerStyle = .capsule
+        btnConfig.baseBackgroundColor = .systemPurple
+        btnConfig.baseForegroundColor = .systemPurple
+        btnConfig.title = "On your list!"
+        btnConfig.attributedTitle?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        btnConfig.buttonSize = .mini
+        alreadyFavoritedButton.configuration = btnConfig
 
         let padding: CGFloat = 10.0
         

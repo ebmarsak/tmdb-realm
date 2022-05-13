@@ -24,7 +24,7 @@ class SearchVC: UIViewController {
         view.backgroundColor = .systemBackground
         configureTableView()
         configureSearchController()
-        getSearchResults(query: "Batman", page: 1)
+//        getSearchResults(query: "Matrix", page: 1)
     }
     
     private func applySnapshot() {
@@ -42,38 +42,56 @@ extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchTableView.deselectRow(at: indexPath, animated: true)
         guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
+        
 //        navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
+        // TODO: route movie detail
     }
     
     private func configureTableView() {
         diffableDataSource = UITableViewDiffableDataSource(tableView: searchTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             let cell = self.searchTableView.dequeueReusableCell(withIdentifier: "searchCell") as! SearchCustomCell
             
-            cell.titleLabel.text = itemIdentifier.title
+            // opt check for date
+            if itemIdentifier.title != nil {
+                cell.titleLabel.text = itemIdentifier.title
+            } else {
+                cell.titleLabel.text = "N/A"
+            }
+            // opt check for poster
             if itemIdentifier.posterPath != nil {
                 cell.getPosterFromURL(posterPath: itemIdentifier.posterPath!)
             } else {
                 cell.poster.image = UIImage(named: "poster-placeholder")
             }
-            cell.releaseDate.text = "\(itemIdentifier.releaseDate!.components(separatedBy: "-")[0])"
-            cell.voteAverage.text = String(itemIdentifier.voteAverage)
-            
+            // opt check for date
+            if itemIdentifier.releaseDate != nil {
+                cell.releaseDate.text = "\(itemIdentifier.releaseDate!.components(separatedBy: "-")[0])"
+            } else {
+                cell.releaseDate.text = "Unknown Date"
+            }
+            // opt check for voteAverage
+            if itemIdentifier.voteAverage != nil {
+                cell.voteAverage.text = String(itemIdentifier.voteAverage!)
+            } else {
+                cell.voteAverage.text = "?.?"
+            }
+            // opt check for favorited movies
             if (self.realm.object(ofType: RLMMovie.self, forPrimaryKey: itemIdentifier.id) == nil) {
                 cell.alreadyFavoritedButton.isHidden = true
             } else {
                 cell.alreadyFavoritedButton.isHidden = false
             }
-            
-            // vote average check
-            if itemIdentifier.voteAverage < 4.0 {
+            // check for voteSymbol color
+            if itemIdentifier.voteAverage! < 4.0 {
                 cell.voteSymbol.image = UIImage(systemName: "heart.square")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-            } else if itemIdentifier.voteAverage < 7.0 {
+            } else if itemIdentifier.voteAverage! < 7.0 {
                 cell.voteSymbol.image = UIImage(systemName: "heart.square")?.withTintColor(.systemOrange, renderingMode: .alwaysOriginal)
-            } else if itemIdentifier.voteAverage < 8.0 {
+            } else if itemIdentifier.voteAverage! < 8.0 {
                 cell.voteSymbol.image = UIImage(systemName: "heart.square")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
             } else {
                 cell.voteSymbol.image = UIImage(systemName: "heart.square")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
             }
+            
             return cell
         })
         
@@ -119,7 +137,10 @@ extension SearchVC: UISearchResultsUpdating, UISearchBarDelegate {
 // MARK: Network calls
 extension SearchVC {
     private func getSearchResults(query: String, page: Int) {
-        NetworkManager.shared.getSearchResults(query: query, page: page) { result in
+        
+        let trimmedString = query.replacingOccurrences(of: " ", with: "%20")
+
+        NetworkManager.shared.getSearchResults(query: trimmedString, page: page) { result in
             switch result {
             case .success(let searchResults):
                 self.searchResults = searchResults.response

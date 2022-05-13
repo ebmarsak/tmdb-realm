@@ -24,15 +24,15 @@ struct SearchResult: Codable {
 
 // MARK: - Response
 struct Response: Codable, Hashable {
-    let adult: Bool
+    let adult: Bool?
     let backdropPath: String?
-    let id: Int
-    let originalTitle: String
+    let id: Int?
+    let originalTitle: String?
     let posterPath: String?
     let releaseDate: String?
-    let title: String
-    let voteAverage: Double
-    let voteCount: Int
+    let title: String?
+    let voteAverage: Double?
+    let voteCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case adult = "adult"
