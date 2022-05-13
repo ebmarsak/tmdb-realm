@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C61B03B6282E30A2003542D8 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61B03B5282E30A2003542D8 /* SearchResult.swift */; };
+		C61B03B8282E5477003542D8 /* SearchCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61B03B7282E5477003542D8 /* SearchCustomCell.swift */; };
 		C61EEB73282BE84300E1B632 /* TrendingMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61EEB72282BE84300E1B632 /* TrendingMovies.swift */; };
 		C61EEB75282BF59000E1B632 /* RLMMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61EEB74282BF59000E1B632 /* RLMMovie.swift */; };
 		C629B063282CFA4200C9AD5F /* FavoritesCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C629B062282CFA4200C9AD5F /* FavoritesCustomCell.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		C61B03B5282E30A2003542D8 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		C61B03B7282E5477003542D8 /* SearchCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCustomCell.swift; sourceTree = "<group>"; };
 		C61EEB72282BE84300E1B632 /* TrendingMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMovies.swift; sourceTree = "<group>"; };
 		C61EEB74282BF59000E1B632 /* RLMMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLMMovie.swift; sourceTree = "<group>"; };
 		C629B062282CFA4200C9AD5F /* FavoritesCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCustomCell.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				C6FA31F6282908CD001DA218 /* MovieCustomCell.swift */,
 				C629B062282CFA4200C9AD5F /* FavoritesCustomCell.swift */,
+				C61B03B7282E5477003542D8 /* SearchCustomCell.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				C64FD3312824F03200DFCA85 /* SceneDelegate.swift in Sources */,
 				C61EEB75282BF59000E1B632 /* RLMMovie.swift in Sources */,
 				C63E183B282A335B00BEF60A /* TrendingViewModel.swift in Sources */,
+				C61B03B8282E5477003542D8 /* SearchCustomCell.swift in Sources */,
 				C64FD35C282515C500DFCA85 /* FavoritesVC.swift in Sources */,
 				C64FD3582825159800DFCA85 /* TrendingVC.swift in Sources */,
 			);

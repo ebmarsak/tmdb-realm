@@ -56,7 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().tintColor = .systemPurple
              
         tabbar.viewControllers = [createFavoritesNavigationController(), createTrendingNavigationController(), createSearchNavigationController()]
-        tabbar.selectedIndex = 1
+        tabbar.selectedIndex = 2
         return tabbar
     }
           
