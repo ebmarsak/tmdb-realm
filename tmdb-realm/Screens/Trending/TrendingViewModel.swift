@@ -18,7 +18,7 @@ final class TrendingViewModel {
     weak var delegate: TrendingVMDelegate?
     let realm = try! Realm()
     
-    var trendingMovies: [Result] = []
+    var trendingMovies: [MovieDetail] = []
 
     // ViewModel functions
     func didTapMovieCell(movieID: Int) {

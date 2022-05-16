@@ -12,12 +12,12 @@ class SearchVC: UIViewController {
     
     let realm = try! Realm()
     
-    var searchResults: [Response] = []
+    var searchResults: [MovieDetail] = []
     var searchQuery: String?
 
     var searchController = UISearchController(searchResultsController: nil)
     var searchTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, Response>!
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieDetail>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class SearchVC: UIViewController {
     }
     
     private func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Response>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieDetail>()
         snapshot.appendSections([.searchSection])
         snapshot.appendItems(self.searchResults)
         diffableDataSource.apply(snapshot, animatingDifferences: true)
@@ -143,7 +143,7 @@ extension SearchVC {
         NetworkManager.shared.getSearchResults(query: trimmedString, page: page) { result in
             switch result {
             case .success(let searchResults):
-                self.searchResults = searchResults.response
+                self.searchResults = searchResults.results
                 print(searchResults)
                 self.applySnapshot()
             case .failure(let error):

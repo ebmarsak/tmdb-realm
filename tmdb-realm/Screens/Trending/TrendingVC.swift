@@ -8,12 +8,6 @@
 import UIKit
 import RealmSwift
 
-enum Section {
-    case trendingSection
-    case favoritesSection
-    case searchSection
-}
-
 class TrendingVC: UIViewController {
     
     let realm = try! Realm()
@@ -21,7 +15,7 @@ class TrendingVC: UIViewController {
     private let trendingViewModel = TrendingViewModel()
     
     let trendingTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, Result>!
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieDetail>!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +24,9 @@ class TrendingVC: UIViewController {
         trendingViewModel.getTrendingMovies(completion: updateDataSource)
         
         configureTableview()
+        
+//        path for realm db
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
 }
 
@@ -49,15 +46,15 @@ extension TrendingVC : UITableViewDelegate{
             
             let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath) as! MovieCustomCell
             cell.titleLabel.text = itemIdentifier.title
-            cell.voteAverage.setTitle(" \(String(itemIdentifier.voteAverage)) ", for: .normal)
-            cell.getPosterFromURL(posterPath: itemIdentifier.posterPath)
+            cell.voteAverage.setTitle(" \(String(itemIdentifier.voteAverage!)) ", for: .normal)
+            cell.getPosterFromURL(posterPath: itemIdentifier.posterPath!)
             
             // vote average check
-            if itemIdentifier.voteAverage < 4.0 {
+            if itemIdentifier.voteAverage! < 4.0 {
                 cell.voteAverage.setTitleColor(.systemRed, for: .normal)
-            } else if itemIdentifier.voteAverage < 7.0 {
+            } else if itemIdentifier.voteAverage! < 7.0 {
                 cell.voteAverage.setTitleColor(.systemOrange, for: .normal)
-            } else if itemIdentifier.voteAverage < 8.0 {
+            } else if itemIdentifier.voteAverage! < 8.0 {
                 cell.voteAverage.setTitleColor(.systemYellow, for: .normal)
             } else {
                 cell.voteAverage.setTitleColor(.systemGreen, for: .normal)
@@ -78,7 +75,7 @@ extension TrendingVC : UITableViewDelegate{
     }
     
     func updateDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Result>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieDetail>()
         snapshot.appendSections([.trendingSection])
         snapshot.appendItems(self.trendingViewModel.trendingMovies)
         diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)

@@ -63,8 +63,3 @@ struct MovieDetail: Codable, Hashable {
         case mediaType = "media_type"
     }
 }
-
-enum MediaType: String, Codable {
-    case movie = "movie"
-    case tv = "tv"
-}

@@ -28,9 +28,9 @@ class MovieDetailVC: UIViewController {
     let scrollView = UIScrollView()
     let stackView = UIStackView()
     
-    var movie: Result
+    var movie: MovieDetail
     
-    init(movie: Result) {
+    init(movie: MovieDetail) {
         self.movie = movie
         super.init(nibName: nil, bundle: nil)
     }
@@ -42,7 +42,7 @@ class MovieDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        getBackdropFromURL(backdropPath: movie.backdropPath)
+        getBackdropFromURL(backdropPath: movie.backdropPath!)
         setProperties()
         configLayout()
     }
@@ -51,12 +51,13 @@ class MovieDetailVC: UIViewController {
     func setProperties() {
         titleName.text = movie.title
         overview.text = movie.overview // + movie.overview + movie.overview + movie.overview
-        voteAverage.text = "Score: \(String(movie.voteAverage))"
+        voteAverage.text = "Score: \(String(movie.voteAverage!))"
         releaseDate.text = "Release Date: \(movie.releaseDate!)"
     }
     
     // Config Layout
     func configLayout() {
+        
         view.addSubview(stackView)
         stackView.addArrangedSubview(backdropImage)
         stackView.addArrangedSubview(scrollView)
@@ -155,7 +156,7 @@ class MovieDetailVC: UIViewController {
             let movie = RLMMovie()
             movie.title = self.movie.title!
             movie.id = self.movie.id
-            movie.poster = self.movie.posterPath
+            movie.poster = self.movie.posterPath!
             realm.add(movie, update: .modified)
             print("Name: \(movie.title) ID: \(movie.id) || Added to realm")
         })
