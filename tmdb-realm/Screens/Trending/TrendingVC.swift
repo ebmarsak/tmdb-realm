@@ -17,7 +17,7 @@ class TrendingVC: UIViewController {
     private let trendingViewModel = TrendingViewModel()
     
     let trendingTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieDetail>!
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +77,7 @@ extension TrendingVC : UITableViewDelegate{
     }
     
     func updateDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieDetail>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieInfo>()
         snapshot.appendSections([.trendingSection])
         snapshot.appendItems(self.trendingViewModel.trendingMovies)
         diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)

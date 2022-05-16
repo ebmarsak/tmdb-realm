@@ -12,12 +12,12 @@ class SearchVC: UIViewController {
     
     let realm = try! Realm()
     
-    var searchResults: [MovieDetail] = []
+    var searchResults: [MovieInfo] = []
     var searchQuery: String?
 
     var searchController = UISearchController(searchResultsController: nil)
     var searchTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieDetail>!
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class SearchVC: UIViewController {
     }
     
     private func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieDetail>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieInfo>()
         snapshot.appendSections([.searchSection])
         snapshot.appendItems(self.searchResults)
         diffableDataSource.apply(snapshot, animatingDifferences: true)

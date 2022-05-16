@@ -16,6 +16,9 @@ protocol MovieDetailDelegate : AnyObject {
 class MovieDetailVC: UIViewController {
     
     weak var delegate: MovieDetailDelegate?
+    private let movieDetailViewModel = MovieDetailViewModel()
+    var movieDetailView = MovieDetailView()
+    
     let realm = try! Realm()
 
     var backdropImage = UIImageView()
@@ -27,11 +30,9 @@ class MovieDetailVC: UIViewController {
 //    let video = AVPlayer
     let scrollView = UIScrollView()
     let stackView = UIStackView()
-    
-    var movie: MovieDetail
-    
-    init(movie: MovieDetail) {
-        self.movie = movie
+        
+    init(movie: MovieInfo) {
+        movieDetailViewModel.movie = movie
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,20 +40,28 @@ class MovieDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = movieDetailView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        getBackdropFromURL(backdropPath: movie.backdropPath!)
-        setProperties()
-        configLayout()
+        
+        movieDetailViewModel.delegate = self
+        
+        movieDetailViewModel.getBackdropFromURL(backdropPath: movieDetailViewModel.movie.backdropPath!, backdropView: backdropImage)
+        
+//        setProperties()
+//        configLayout()
     }
     
     // Set properties
     func setProperties() {
-        titleName.text = movie.title
-        overview.text = movie.overview // + movie.overview + movie.overview + movie.overview
-        voteAverage.text = "Score: \(String(movie.voteAverage!))"
-        releaseDate.text = "Release Date: \(movie.releaseDate!)"
+        titleName.text = movieDetailViewModel.movie.title
+        overview.text = movieDetailViewModel.movie.overview
+        voteAverage.text = "Score: \(String(movieDetailViewModel.movie.voteAverage!))"
+        releaseDate.text = "Release Date: \(movieDetailViewModel.movie.releaseDate!)"
     }
     
     // Config Layout
@@ -152,23 +161,13 @@ class MovieDetailVC: UIViewController {
     
     // Button Functions
     @objc func didTapAddToFavorites() {
-        try! realm.write({
-            let movie = RLMMovie()
-            movie.title = self.movie.title!
-            movie.id = self.movie.id
-            movie.poster = self.movie.posterPath!
-            realm.add(movie, update: .modified)
-            print("Name: \(movie.title) ID: \(movie.id) || Added to realm")
-        })
-        self.delegate?.didAddNewItem()
+        movieDetailViewModel.didTapAddToFavorites()
     }
     
-    // Network Call
-    func getBackdropFromURL(backdropPath: String){
-        NetworkManager.shared.getBackdropImage(backdropPath: backdropPath) { image in
-            DispatchQueue.main.async {
-                self.backdropImage.image = image
-            }
-        }
+}
+
+extension MovieDetailVC: MovieDetailDelegate {
+    func didAddNewItem() {
+        
     }
 }

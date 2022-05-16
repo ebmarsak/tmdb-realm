@@ -63,7 +63,7 @@ class NetworkManager {
     }
     
     // GET movie by ID
-    func getMovieByID(movieID id: Int, completed: @escaping (Swift.Result<MovieDetail, Error>) -> Void) {
+    func getMovieByID(movieID id: Int, completed: @escaping (Swift.Result<MovieInfo, Error>) -> Void) {
         
         let endpoint = "\(baseURL)/movie/\(id)?api_key=\(apiKey)"
         guard let url = URL(string: endpoint) else { return }
@@ -76,7 +76,7 @@ class NetworkManager {
             
             do {
                 let decoder = JSONDecoder()
-                let movie = try decoder.decode(MovieDetail.self, from: data)
+                let movie = try decoder.decode(MovieInfo.self, from: data)
                 completed(.success(movie))
             } catch {
                 return

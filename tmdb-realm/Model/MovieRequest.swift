@@ -9,7 +9,7 @@ import Foundation
 
 struct MovieRequest: Codable, Hashable {
     let page: Int
-    let results: [MovieDetail]
+    let results: [MovieInfo]
     let totalPages: Int
     let totalResults: Int
 
@@ -22,7 +22,8 @@ struct MovieRequest: Codable, Hashable {
 }
 
 
-struct MovieDetail: Codable, Hashable {
+struct MovieInfo: Codable, Hashable {
+    
     let id: Int
 
     let title: String?
