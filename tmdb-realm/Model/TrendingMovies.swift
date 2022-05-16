@@ -30,7 +30,6 @@ struct Result: Codable, Hashable {
     let adult: Bool?
     let backdropPath: String
     let voteCount: Int
-    let genreIDS: [Int]
     let id: Int
     let originalLanguage: String
     let originalTitle: String?
@@ -41,8 +40,6 @@ struct Result: Codable, Hashable {
     let popularity: Double
     let mediaType: MediaType
     let originalName: String?
-    let originCountry: [String]?
-    let firstAirDate: String?
     let name: String?
 
     enum CodingKeys: String, CodingKey {
@@ -51,7 +48,6 @@ struct Result: Codable, Hashable {
         case adult = "adult"
         case backdropPath = "backdrop_path"
         case voteCount = "vote_count"
-        case genreIDS = "genre_ids"
         case id = "id"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
@@ -62,13 +58,11 @@ struct Result: Codable, Hashable {
         case popularity = "popularity"
         case mediaType = "media_type"
         case originalName = "original_name"
-        case originCountry = "origin_country"
-        case firstAirDate = "first_air_date"
         case name = "name"
     }
 }
 
-enum MediaType: String, Codable {
-    case movie = "movie"
-    case tv = "tv"
-}
+//enum MediaType: String, Codable {
+//    case movie = "movie"
+//    case tv = "tv"
+//}

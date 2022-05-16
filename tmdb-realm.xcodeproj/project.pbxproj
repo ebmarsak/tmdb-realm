@@ -26,6 +26,7 @@
 		C64FD35C282515C500DFCA85 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64FD35B282515C500DFCA85 /* FavoritesVC.swift */; };
 		C64FD35E2825179700DFCA85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C64FD35D2825179700DFCA85 /* Main.storyboard */; };
 		C64FD36628254B5500DFCA85 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64FD36528254B5500DFCA85 /* Movie.swift */; };
+		C65B29D5283221FE00C3D49C /* MovieRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D4283221FE00C3D49C /* MovieRequest.swift */; };
 		C6FA31F7282908CD001DA218 /* MovieCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA31F6282908CD001DA218 /* MovieCustomCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		C64FD35B282515C500DFCA85 /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		C64FD35D2825179700DFCA85 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C64FD36528254B5500DFCA85 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		C65B29D4283221FE00C3D49C /* MovieRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRequest.swift; sourceTree = "<group>"; };
 		C6FA31F6282908CD001DA218 /* MovieCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				C61B03B5282E30A2003542D8 /* SearchResult.swift */,
 				C61EEB72282BE84300E1B632 /* TrendingMovies.swift */,
 				C61EEB74282BF59000E1B632 /* RLMMovie.swift */,
+				C65B29D4283221FE00C3D49C /* MovieRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				C64FD3562825156600DFCA85 /* NetworkManager.swift in Sources */,
 				C6FA31F7282908CD001DA218 /* MovieCustomCell.swift in Sources */,
 				C64FD32F2824F03200DFCA85 /* AppDelegate.swift in Sources */,
+				C65B29D5283221FE00C3D49C /* MovieRequest.swift in Sources */,
 				C64FD36628254B5500DFCA85 /* Movie.swift in Sources */,
 				C635F7A0282A830900F945CB /* MovieDetailVC.swift in Sources */,
 				C61B03B6282E30A2003542D8 /* SearchResult.swift in Sources */,
