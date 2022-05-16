@@ -25,6 +25,7 @@
 		C64FD35E2825179700DFCA85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C64FD35D2825179700DFCA85 /* Main.storyboard */; };
 		C65B29D5283221FE00C3D49C /* MovieRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D4283221FE00C3D49C /* MovieRequest.swift */; };
 		C65B29D828322ACA00C3D49C /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D728322ACA00C3D49C /* Enum.swift */; };
+		C65B29DA28322BAC00C3D49C /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */; };
 		C6FA31F7282908CD001DA218 /* MovieCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA31F6282908CD001DA218 /* MovieCustomCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		C64FD35D2825179700DFCA85 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C65B29D4283221FE00C3D49C /* MovieRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRequest.swift; sourceTree = "<group>"; };
 		C65B29D728322ACA00C3D49C /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		C6FA31F6282908CD001DA218 /* MovieCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				C64FD35B282515C500DFCA85 /* FavoritesVC.swift */,
+				C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C65B29DA28322BAC00C3D49C /* FavoritesViewModel.swift in Sources */,
 				C629B063282CFA4200C9AD5F /* FavoritesCustomCell.swift in Sources */,
 				C64FD35A282515B100DFCA85 /* SearchVC.swift in Sources */,
 				C64FD3562825156600DFCA85 /* NetworkManager.swift in Sources */,

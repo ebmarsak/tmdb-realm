@@ -15,34 +15,35 @@ protocol FavoritesVCDelegate : AnyObject {
 class FavoritesVC: UIViewController {
     
     let favoritesTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, RLMMovie>!
+//    var diffableDataSource : UITableViewDiffableDataSource<Section, RLMMovie>!
     
-    let realm = try! Realm()
+//    let realm = try! Realm()
     weak var delegate: FavoritesVCDelegate?
     
-    var favoriteMovies: [RLMMovie] = []
+    private let favoritesViewModel = FavoritesViewModel()
+    
+//    var favoriteMovies: [RLMMovie] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        self.title = "Favorites"
+        favoritesViewModel.delegate = self
         
-        let realmData = realm.objects(RLMMovie.self)
-        favoriteMovies = Array(realmData)
+//        let realmData = favoritesViewModel.realm.objects(RLMMovie.self)
+//        favoritesViewModel.favoriteMovies = Array(realmData)
         
         configureTableview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        didAddNewItem()
+        favoritesViewModel.didAddNewItem()
     }
-
 }
 
 // MARK: TableView Configuration
 extension FavoritesVC: UITableViewDelegate {
     func configureTableview() {
-        diffableDataSource = UITableViewDiffableDataSource(tableView: favoritesTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+        favoritesViewModel.diffableDataSource = UITableViewDiffableDataSource(tableView: favoritesTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             let cell = self.favoritesTableView.dequeueReusableCell(withIdentifier: "favoritesCell", for: indexPath) as! FavoritesCustomCell
             cell.id = itemIdentifier.id
             cell.titleLabel.text = itemIdentifier.title
@@ -68,32 +69,19 @@ extension FavoritesVC: UITableViewDelegate {
         let alert = UIAlertController(title: "Remove from list", message: "\(currentCell.titleLabel.text!) will be deleted from your favorites list. Are you sure?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: {(alert: UIAlertAction!) in
-                var snapshot = self.diffableDataSource.snapshot()
-                if let item = self.diffableDataSource.itemIdentifier(for: indexPath) {
+            var snapshot = self.favoritesViewModel.diffableDataSource.snapshot()
+            if let item = self.favoritesViewModel.diffableDataSource.itemIdentifier(for: indexPath) {
                     snapshot.deleteItems([item])
-                    self.diffableDataSource.apply(snapshot)
+                self.favoritesViewModel.diffableDataSource.apply(snapshot)
                 }
-                let itemToRemove = self.realm.object(ofType: RLMMovie.self, forPrimaryKey: currentCell.id)
+            let itemToRemove = self.favoritesViewModel.realm.object(ofType: RLMMovie.self, forPrimaryKey: currentCell.id)
 
-                try! self.realm.write({ self.realm.delete(itemToRemove!) })
+            try! self.favoritesViewModel.realm.write({ self.favoritesViewModel.realm.delete(itemToRemove!) })
             }))
         self.present(alert, animated: true, completion: nil)
     }
     
-    func updateDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, RLMMovie>()
-        snapshot.appendSections([.favoritesSection])
-        snapshot.appendItems(self.favoriteMovies)
-        diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-        print("diff snapshot updated")
-    }
 }
-
-// Protocol functions
-extension FavoritesVC : MovieDetailDelegate {
-    func didAddNewItem() {
-        let realmData = realm.objects(RLMMovie.self)
-        self.favoriteMovies = Array(realmData)
-        self.updateDataSource()
-    }
+extension FavoritesVC: FavoritesVMDelegate {
+    
 }

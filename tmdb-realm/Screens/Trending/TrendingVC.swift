@@ -8,6 +8,8 @@
 import UIKit
 import RealmSwift
 
+// TODO: fix diffableDataSource still existing inside TrendingVC
+
 class TrendingVC: UIViewController {
     
     let realm = try! Realm()
