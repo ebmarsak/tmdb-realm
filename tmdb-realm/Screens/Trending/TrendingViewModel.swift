@@ -9,17 +9,16 @@ import Foundation
 import UIKit
 import RealmSwift
 
-protocol TrendingVMDelegate : AnyObject {
-//    func didFetchTrendingMovies()
+protocol TrendingViewModelDelegate: AnyObject {
     func didFetchMovieDetails()
 }
 
 final class TrendingViewModel {
     
-    weak var delegate: TrendingVMDelegate?
+    weak var delegate: TrendingViewModelDelegate?
     let realm = try! Realm()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
     var trendingMovies: [MovieInfo] = []
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
     
     
     func voteAverageColorCheck(voteAverage: Double) -> UIColor {

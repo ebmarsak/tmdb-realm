@@ -65,7 +65,7 @@ extension TrendingVC : UITableViewDelegate{
     }
 }
 
-extension TrendingVC: TrendingVMDelegate {
+extension TrendingVC: TrendingViewModelDelegate {
     func didFetchMovieDetails() {
     }
 }

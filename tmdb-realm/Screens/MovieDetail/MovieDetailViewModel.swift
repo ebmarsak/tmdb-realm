@@ -16,7 +16,6 @@ final class MovieDetailViewModel {
     
     var movie: MovieInfo!
     
-    
     // Network Call
     func getBackdropFromURL(backdropPath: String, backdropView: UIImageView) {
         NetworkManager.shared.getBackdropImage(backdropPath: backdropPath) { image in

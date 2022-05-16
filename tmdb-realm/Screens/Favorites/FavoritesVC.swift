@@ -8,15 +8,14 @@
 import UIKit
 import RealmSwift
 
-protocol FavoritesVCDelegate : AnyObject {
+protocol FavoritesVCDelegate: AnyObject {
     func isAlreadyInFavorites(id: Int) -> Bool
 }
 
-class FavoritesVC: UIViewController, FavoritesVMDelegate {
-    
+class FavoritesVC: UIViewController, FavoritesViewModelDelegate {
     let favoritesTableView = UITableView()
     
-//    weak var delegate: FavoritesVCDelegate?
+    weak var delegate: FavoritesVCDelegate?
     private let favoritesViewModel = FavoritesViewModel()
         
     override func viewDidLoad() {

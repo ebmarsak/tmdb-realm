@@ -14,7 +14,6 @@ class MovieCustomCell: UITableViewCell {
     
     let titleLabel = UILabel()
     var voteAverage = UIButton()
-//    let releaseDate = UILabel()
     let poster = UIImageView()
     let alreadyFavoritedButton = UIButton()
     var isAlreadyInFavorites: Bool = true
@@ -46,7 +45,6 @@ class MovieCustomCell: UITableViewCell {
         addSubview(poster)
         addSubview(titleLabel)
         addSubview(voteAverage)
-//        addSubview(releaseDate)
         addSubview(alreadyFavoritedButton)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -68,10 +66,6 @@ class MovieCustomCell: UITableViewCell {
         voteAverage.setTitleColor(.systemOrange, for: .normal)
         voteAverage.backgroundColor = .tertiarySystemFill
         voteAverage.layer.cornerRadius = 8
-        
-//        alreadyFavoritedButton.backgroundColor = .systemGreen
-//        alreadyFavoritedButton.setTitle(" On your favorites list! ", for: .normal)
-//        alreadyFavoritedButton.layer.cornerRadius = 10
         
         var btnConfig = UIButton.Configuration.tinted()
         btnConfig.cornerStyle = .capsule

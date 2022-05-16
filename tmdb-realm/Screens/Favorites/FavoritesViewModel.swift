@@ -9,13 +9,11 @@ import Foundation
 import UIKit
 import RealmSwift
 
-protocol FavoritesVMDelegate : AnyObject {
-    
-}
+protocol FavoritesViewModelDelegate : AnyObject { }
 
 final class FavoritesViewModel {
     
-    weak var delegate: FavoritesVMDelegate?
+    weak var delegate: FavoritesViewModelDelegate?
     let realm = try! Realm()
     
     var favoriteMovies: [RLMMovie] = []
@@ -38,6 +36,7 @@ final class FavoritesViewModel {
     
     // Remove item confirmation alert and related realm + diffableDataSource operations
     func didTapFavoriteCell(tappedCell: FavoritesCustomCell, indexPath: IndexPath) -> UIAlertController {
+        
         let alert = UIAlertController(title: "Remove from list", message: "\(tappedCell.titleLabel.text!) will be deleted from your favorites list. Are you sure?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: {(alert: UIAlertAction!) in
@@ -55,7 +54,7 @@ final class FavoritesViewModel {
 }
 
 // Protocol functions
-extension FavoritesViewModel: MovieDetailDelegate {
+extension FavoritesViewModel : MovieDetailDelegate {
     func didAddNewItem() {
         let realmData = realm.objects(RLMMovie.self)
         self.favoriteMovies = Array(realmData)

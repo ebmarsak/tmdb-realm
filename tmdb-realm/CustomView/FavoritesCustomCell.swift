@@ -42,13 +42,15 @@ class FavoritesCustomCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         poster.translatesAutoresizingMaskIntoConstraints = false
         
+        titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)
+        
         let padding: CGFloat = 10
         
         NSLayoutConstraint.activate([
             poster.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             poster.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            poster.widthAnchor.constraint(equalToConstant: 40),
-            poster.heightAnchor.constraint(equalToConstant: 72),
+            poster.widthAnchor.constraint(equalToConstant: 60),
+            poster.heightAnchor.constraint(equalToConstant: 92),
             
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             titleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: padding),
