@@ -24,7 +24,7 @@
 		C64FD35C282515C500DFCA85 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64FD35B282515C500DFCA85 /* FavoritesVC.swift */; };
 		C64FD35E2825179700DFCA85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C64FD35D2825179700DFCA85 /* Main.storyboard */; };
 		C65B29D5283221FE00C3D49C /* MovieRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D4283221FE00C3D49C /* MovieRequest.swift */; };
-		C65B29D828322ACA00C3D49C /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D728322ACA00C3D49C /* Enum.swift */; };
+		C65B29D828322ACA00C3D49C /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D728322ACA00C3D49C /* Enumerations.swift */; };
 		C65B29DA28322BAC00C3D49C /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */; };
 		C65B29DC28323DC900C3D49C /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29DB28323DC900C3D49C /* MovieDetailViewModel.swift */; };
 		C65B29DE2832611200C3D49C /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B29DD2832611200C3D49C /* MovieDetailView.swift */; };
@@ -49,7 +49,7 @@
 		C64FD35B282515C500DFCA85 /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		C64FD35D2825179700DFCA85 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C65B29D4283221FE00C3D49C /* MovieRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRequest.swift; sourceTree = "<group>"; };
-		C65B29D728322ACA00C3D49C /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		C65B29D728322ACA00C3D49C /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		C65B29DB28323DC900C3D49C /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		C65B29DD2832611200C3D49C /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		C64FD3442824F82000DFCA85 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C65B29D628322ABD00C3D49C /* Enumerations */,
+				C65B29D728322ACA00C3D49C /* Enumerations.swift */,
 				C61EEB74282BF59000E1B632 /* RLMMovie.swift */,
 				C65B29D4283221FE00C3D49C /* MovieRequest.swift */,
 			);
@@ -165,14 +165,6 @@
 				C65B29D928322BAC00C3D49C /* FavoritesViewModel.swift */,
 			);
 			path = Favorites;
-			sourceTree = "<group>";
-		};
-		C65B29D628322ABD00C3D49C /* Enumerations */ = {
-			isa = PBXGroup;
-			children = (
-				C65B29D728322ACA00C3D49C /* Enum.swift */,
-			);
-			path = Enumerations;
 			sourceTree = "<group>";
 		};
 		C6FA31F5282908A7001DA218 /* CustomView */ = {
@@ -269,7 +261,7 @@
 				C64FD3562825156600DFCA85 /* NetworkManager.swift in Sources */,
 				C65B29DC28323DC900C3D49C /* MovieDetailViewModel.swift in Sources */,
 				C6FA31F7282908CD001DA218 /* MovieCustomCell.swift in Sources */,
-				C65B29D828322ACA00C3D49C /* Enum.swift in Sources */,
+				C65B29D828322ACA00C3D49C /* Enumerations.swift in Sources */,
 				C64FD32F2824F03200DFCA85 /* AppDelegate.swift in Sources */,
 				C65B29D5283221FE00C3D49C /* MovieRequest.swift in Sources */,
 				C635F7A0282A830900F945CB /* MovieDetailVC.swift in Sources */,

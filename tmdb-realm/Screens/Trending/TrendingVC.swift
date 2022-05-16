@@ -8,8 +8,6 @@
 import UIKit
 import RealmSwift
 
-// TODO: fix diffableDataSource still existing inside TrendingVC
-
 class TrendingVC: UIViewController {
     
     let realm = try! Realm()
@@ -17,17 +15,16 @@ class TrendingVC: UIViewController {
     private let trendingViewModel = TrendingViewModel()
     
     let trendingTableView = UITableView()
-    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         trendingViewModel.delegate = self
-        trendingViewModel.getTrendingMovies(completion: updateDataSource)
+        trendingViewModel.getTrendingMovies()
         
         configureTableview()
         
-//        path for realm db
+//        >> path for realm db <<
 //        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
 }
@@ -37,32 +34,23 @@ extension TrendingVC : UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         trendingTableView.deselectRow(at: indexPath, animated: true)
-        guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
+        guard let selectedItem = trendingViewModel.diffableDataSource.itemIdentifier(for: indexPath) else { return }
         
         trendingViewModel.didTapMovieCell(movieID: selectedItem.id)
         navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
     }
     
     func configureTableview() {
-        diffableDataSource = UITableViewDiffableDataSource(tableView: trendingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+        trendingViewModel.diffableDataSource = UITableViewDiffableDataSource(tableView: trendingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             
             let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath) as! MovieCustomCell
+            
             cell.titleLabel.text = itemIdentifier.title
             cell.voteAverage.setTitle(" \(String(itemIdentifier.voteAverage!)) ", for: .normal)
             cell.getPosterFromURL(posterPath: itemIdentifier.posterPath!)
+                        
+            cell.voteAverage.setTitleColor(self.trendingViewModel.voteAverageColorCheck(voteAverage: itemIdentifier.voteAverage!), for: .normal)
             
-            // vote average check
-            if itemIdentifier.voteAverage! < 4.0 {
-                cell.voteAverage.setTitleColor(.systemRed, for: .normal)
-            } else if itemIdentifier.voteAverage! < 7.0 {
-                cell.voteAverage.setTitleColor(.systemOrange, for: .normal)
-            } else if itemIdentifier.voteAverage! < 8.0 {
-                cell.voteAverage.setTitleColor(.systemYellow, for: .normal)
-            } else {
-                cell.voteAverage.setTitleColor(.systemGreen, for: .normal)
-            }
-            
-            // isAlreadyFavorite check
             cell.alreadyFavoritedButton.isHidden = self.isAlreadyInFavorites(id: itemIdentifier.id)
             
             return cell
@@ -75,20 +63,9 @@ extension TrendingVC : UITableViewDelegate{
         trendingTableView.rowHeight = 310
         view.addSubview(trendingTableView)
     }
-    
-    func updateDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieInfo>()
-        snapshot.appendSections([.trendingSection])
-        snapshot.appendItems(self.trendingViewModel.trendingMovies)
-        diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-    }
 }
 
 extension TrendingVC: TrendingVMDelegate {
-    func didFetchTrendingMovies() {
-        DispatchQueue.main.async { self.updateDataSource() }
-    }
-    
     func didFetchMovieDetails() {
     }
 }
@@ -98,4 +75,3 @@ extension TrendingVC: FavoritesVCDelegate {
         return realm.object(ofType: RLMMovie.self, forPrimaryKey: id) == nil
     }
 }
-

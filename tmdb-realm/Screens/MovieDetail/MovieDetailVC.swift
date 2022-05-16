@@ -40,9 +40,9 @@ class MovieDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        view = movieDetailView
-    }
+//    override func loadView() {
+//        view = movieDetailView
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +52,8 @@ class MovieDetailVC: UIViewController {
         
         movieDetailViewModel.getBackdropFromURL(backdropPath: movieDetailViewModel.movie.backdropPath!, backdropView: backdropImage)
         
-//        setProperties()
-//        configLayout()
+        setProperties()
+        configLayout()
     }
     
     // Set properties

@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import UIKit
 import RealmSwift
 
 protocol TrendingVMDelegate : AnyObject {
-    func didFetchTrendingMovies()
+//    func didFetchTrendingMovies()
     func didFetchMovieDetails()
 }
 
@@ -17,8 +18,28 @@ final class TrendingViewModel {
     
     weak var delegate: TrendingVMDelegate?
     let realm = try! Realm()
-    
+    var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
     var trendingMovies: [MovieInfo] = []
+    
+    
+    func voteAverageColorCheck(voteAverage: Double) -> UIColor {
+        if voteAverage < 4.0 {
+            return .systemRed
+        } else if voteAverage < 7.0 {
+            return .systemOrange
+        } else if voteAverage < 8.0 {
+            return .systemYellow
+        } else {
+            return .systemGreen
+        }
+    }
+    
+    func updateDataSource() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieInfo>()
+        snapshot.appendSections([.trendingSection])
+        snapshot.appendItems(self.trendingMovies)
+        self.diffableDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+    }
 
     // ViewModel functions
     func didTapMovieCell(movieID: Int) {
@@ -26,13 +47,12 @@ final class TrendingViewModel {
     }
     
     // Network Calls
-    func getTrendingMovies(completion: @escaping () -> ()) {
+    func getTrendingMovies() {
         NetworkManager.shared.getTrendingMovies(contentType: .movie, timePeriod: .week) { result in
             switch result {
             case .success(let movies):
                 self.trendingMovies = movies.results
-//                self.delegate?.didFetchTrendingMovies()
-                completion()
+                self.updateDataSource()
             case .failure(let error):
                 print(error)
             }
@@ -42,7 +62,7 @@ final class TrendingViewModel {
     func fetchMovieDetails(movieID: Int) {
         NetworkManager.shared.getMovieByID(movieID: movieID) { result in
             switch result {
-            case .success(let movie):
+            case .success(_):
                 self.delegate?.didFetchMovieDetails()
             case .failure(let error):
                 print(error)

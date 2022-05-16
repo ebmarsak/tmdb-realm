@@ -103,7 +103,6 @@ extension SearchVC: UITableViewDelegate {
         view.addSubview(searchTableView)
     }
 }
-// TODO: search query boşluk gg
 // MARK: Configure SearchController
 extension SearchVC: UISearchResultsUpdating, UISearchBarDelegate {
     

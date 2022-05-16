@@ -55,7 +55,7 @@ final class FavoritesViewModel {
 }
 
 // Protocol functions
-extension FavoritesViewModel : MovieDetailDelegate {
+extension FavoritesViewModel: MovieDetailDelegate {
     func didAddNewItem() {
         let realmData = realm.objects(RLMMovie.self)
         self.favoriteMovies = Array(realmData)

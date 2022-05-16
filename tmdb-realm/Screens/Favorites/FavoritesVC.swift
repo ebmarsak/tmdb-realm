@@ -16,7 +16,7 @@ class FavoritesVC: UIViewController, FavoritesVMDelegate {
     
     let favoritesTableView = UITableView()
     
-    weak var delegate: FavoritesVCDelegate?
+//    weak var delegate: FavoritesVCDelegate?
     private let favoritesViewModel = FavoritesViewModel()
         
     override func viewDidLoad() {
@@ -55,7 +55,6 @@ extension FavoritesVC: UITableViewDelegate {
         
         favoritesTableView.deselectRow(at: indexPath, animated: true)
         let currentCell = favoritesTableView.cellForRow(at: indexPath) as! FavoritesCustomCell
-        
         // Remove item confirmation alert and related realm + diffableDataSource operations
         self.present(favoritesViewModel.didTapFavoriteCell(tappedCell: currentCell, indexPath: indexPath), animated: true, completion: nil)
     }
