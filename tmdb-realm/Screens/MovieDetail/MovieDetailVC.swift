@@ -7,7 +7,6 @@
 
 import UIKit
 import RealmSwift
-//import AVFoundation
 
 protocol MovieDetailDelegate : AnyObject {
     func updateRealmDB()
@@ -35,30 +34,22 @@ class MovieDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        
         movieDetailViewModel.delegate = self
         movieDetailView.delegate = self
         setViewProperties()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
-        let sizeOfSV = self.movieDetailView.titleName.bounds.height + self.movieDetailView.overview.bounds.height + self.movieDetailView.addToFavoritesButton.bounds.height + 80
-        
-        movieDetailView.scrollView.contentSize.height = sizeOfSV
+        // calculate contentSize for scrollView after all data is fetched/applied.
+        movieDetailView.scrollView.contentSize.height = self.movieDetailView.titleName.bounds.height + self.movieDetailView.overview.bounds.height + self.movieDetailView.addToFavoritesButton.bounds.height + 80
     }
     
     // Set properties
-    func setViewProperties() {
+    private func setViewProperties() {
         movieDetailView.titleName.text = movieDetailViewModel.movie.title
         movieDetailView.overview.text = movieDetailViewModel.movie.overview
         movieDetailView.voteAverage.text = "Score: \(String(movieDetailViewModel.movie.voteAverage!))"
         movieDetailView.releaseDate.text = "Release Date: \(movieDetailViewModel.movie.releaseDate!)"
-        // get backdrop image
         movieDetailViewModel.getBackdropFromURL(backdropPath: movieDetailViewModel.movie.backdropPath!, backdropView: movieDetailView.backdropImage)
     }
 }

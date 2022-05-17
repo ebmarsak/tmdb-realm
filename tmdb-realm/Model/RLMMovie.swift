@@ -9,7 +9,6 @@ import Foundation
 import RealmSwift
 
 class RLMMovie: Object {
-//    @Persisted(primaryKey: true) var _objectId: ObjectId
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var poster: String

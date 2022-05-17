@@ -13,9 +13,9 @@ class MovieCustomCell: UITableViewCell {
     let realm = try! Realm()
     
     let titleLabel = UILabel()
-    var voteAverage = UIButton()
     let poster = UIImageView()
     let alreadyFavoritedButton = UIButton()
+    var voteAverage = UIButton()
     var isAlreadyInFavorites: Bool = true
 
     override func awakeFromNib() {
@@ -28,6 +28,7 @@ class MovieCustomCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .systemBackground
         configSubviews()
     }
     
@@ -42,21 +43,15 @@ class MovieCustomCell: UITableViewCell {
     }
     
     private func configSubviews() {
-        addSubview(poster)
-        addSubview(titleLabel)
-        addSubview(voteAverage)
-        addSubview(alreadyFavoritedButton)
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        voteAverage.translatesAutoresizingMaskIntoConstraints = false
-        poster.translatesAutoresizingMaskIntoConstraints = false
-        alreadyFavoritedButton.translatesAutoresizingMaskIntoConstraints = false
+        let subviews = [titleLabel, poster, voteAverage, alreadyFavoritedButton]
+        subviews.forEach { addSubview($0) }
+        subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         poster.layer.cornerRadius = 10
         poster.clipsToBounds = true
         
         titleLabel.adjustsFontSizeToFitWidth = true
-//        titleLabel.textColor = UIColor.purple
         titleLabel.textAlignment = .left
         titleLabel.lineBreakStrategy = .standard
         titleLabel.numberOfLines = 0

@@ -18,27 +18,27 @@ class TrendingVC: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         trendingViewModel.delegate = self
         trendingViewModel.getTrendingMovies()
         
         configureTableview()
-        
-//        >> path for realm db <<
 //        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        applyChangesToSnapshot()
+    }
+    
+    func applyChangesToSnapshot() {
         var snp = trendingViewModel.diffableDataSource.snapshot()
         snp.reloadItems(self.trendingViewModel.trendingMovies)
-        trendingViewModel.diffableDataSource.apply(snp, animatingDifferences: true)
-        print("reloadItems")
+        trendingViewModel.diffableDataSource.applySnapshotUsingReloadData(snp)
+        print("refreshing diff db")
     }
 }
 
 // MARK: TableView Configuration
 extension TrendingVC : UITableViewDelegate{
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         trendingTableView.deselectRow(at: indexPath, animated: true)
         guard let selectedItem = trendingViewModel.diffableDataSource.itemIdentifier(for: indexPath) else { return }
@@ -47,7 +47,7 @@ extension TrendingVC : UITableViewDelegate{
         navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
     }
     
-    func configureTableview() {
+    private func configureTableview() {
         trendingViewModel.diffableDataSource = UITableViewDiffableDataSource(tableView: trendingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             
             let cell = self.trendingTableView.dequeueReusableCell(withIdentifier: "trendingCell", for: indexPath) as! MovieCustomCell

@@ -13,9 +13,7 @@ class SearchCustomCell: UITableViewCell {
     var releaseDate = UILabel()
     var poster = UIImageView()
     var voteAverage = UILabel()
-    
     let voteSymbol = UIImageView()
-    
     let alreadyFavoritedButton = UIButton()
 
     override func awakeFromNib() {
@@ -43,19 +41,9 @@ class SearchCustomCell: UITableViewCell {
     }
     
     private func configSubviews() {
-        addSubview(titleLabel)
-        addSubview(releaseDate)
-        addSubview(poster)
-        addSubview(voteAverage)
-        addSubview(voteSymbol)
-        addSubview(alreadyFavoritedButton)
-        
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        releaseDate.translatesAutoresizingMaskIntoConstraints = false
-        poster.translatesAutoresizingMaskIntoConstraints = false
-        voteAverage.translatesAutoresizingMaskIntoConstraints = false
-        voteSymbol.translatesAutoresizingMaskIntoConstraints = false
-        alreadyFavoritedButton.translatesAutoresizingMaskIntoConstraints = false
+        let subviews = [titleLabel, releaseDate, poster, voteAverage, voteSymbol, alreadyFavoritedButton]
+        subviews.forEach { addSubview($0) }
+        subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         titleLabel.numberOfLines = 2

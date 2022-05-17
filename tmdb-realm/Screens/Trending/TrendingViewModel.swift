@@ -14,6 +14,8 @@ protocol TrendingViewModelDelegate: AnyObject {
 
 final class TrendingViewModel {
     weak var delegate: TrendingViewModelDelegate?
+//    weak var movieDetailDelegate: MovieDetailDelegate?
+
     var trendingMovies: [MovieInfo] = []
     var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
     
@@ -30,7 +32,7 @@ final class TrendingViewModel {
         }
     }
     
-    func updateDataSource() {
+    private func updateDataSource() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MovieInfo>()
         snapshot.appendSections([.trendingSection])
         snapshot.appendItems(self.trendingMovies)
@@ -65,4 +67,16 @@ final class TrendingViewModel {
             }
         }
     }
+    func applyChangesToSnapshot() {
+        var snp = diffableDataSource.snapshot()
+        snp.reloadItems(self.trendingMovies)
+        diffableDataSource.applySnapshotUsingReloadData(snp)
+        print("refreshing diff db")
+    }
 }
+
+//extension TrendingViewModel: MovieDetailViewDelegate {
+//    func didTapFavoriteButton() {
+//        applyChangesToSnapshot()
+//    }
+//}

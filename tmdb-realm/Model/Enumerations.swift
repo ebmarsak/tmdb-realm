@@ -7,12 +7,14 @@
 
 import Foundation
 
+// DiffableDataSource sections
 enum Section {
     case trendingSection
     case favoritesSection
     case searchSection
 }
 
+// Movie network call parameters
 enum trendingMediaType : String {
     case all = "all"
     case movie = "movie"

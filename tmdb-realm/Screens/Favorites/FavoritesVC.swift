@@ -32,7 +32,7 @@ class FavoritesVC: UIViewController, FavoritesViewModelDelegate {
 
 // MARK: TableView Configuration
 extension FavoritesVC: UITableViewDelegate {
-    func configureTableview() {
+    private func configureTableview() {
         favoritesViewModel.diffableDataSource = UITableViewDiffableDataSource(tableView: favoritesTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             let cell = self.favoritesTableView.dequeueReusableCell(withIdentifier: "favoritesCell", for: indexPath) as! FavoritesCustomCell
             cell.id = itemIdentifier.id

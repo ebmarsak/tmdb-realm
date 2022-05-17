@@ -40,26 +40,18 @@ class MovieDetailView: UIView {
     }
     
     // Layout configuration
-    func configLayout() {
+    private func configLayout() {
         addSubview(stackView)
         stackView.addArrangedSubview(backdropImage)
         stackView.addArrangedSubview(scrollView)
-        scrollView.addSubview(titleName)
-        scrollView.addSubview(overview)
-        scrollView.addSubview(releaseDate)
-        scrollView.addSubview(voteAverage)
-        scrollView.addSubview(addToFavoritesButton)
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        backdropImage.translatesAutoresizingMaskIntoConstraints = false
-        titleName.translatesAutoresizingMaskIntoConstraints = false
-        releaseDate.translatesAutoresizingMaskIntoConstraints = false
-        voteAverage.translatesAutoresizingMaskIntoConstraints = false
-        overview.translatesAutoresizingMaskIntoConstraints = false
-        addToFavoritesButton.translatesAutoresizingMaskIntoConstraints = false
+        // scrollView subviews
+        [titleName, overview, releaseDate, voteAverage, addToFavoritesButton].forEach { scrollView.addSubview($0) }
+        
+        [stackView, scrollView, backdropImage, titleName, releaseDate, voteAverage, overview, addToFavoritesButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
+            
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),

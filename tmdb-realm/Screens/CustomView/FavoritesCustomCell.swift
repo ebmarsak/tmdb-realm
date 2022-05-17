@@ -36,11 +36,9 @@ class FavoritesCustomCell: UITableViewCell {
     }
     
     private func configSubviews() {
-        addSubview(titleLabel)
-        addSubview(poster)
-        
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        poster.translatesAutoresizingMaskIntoConstraints = false
+        let subviews = [titleLabel, poster]
+        subviews.forEach { addSubview($0) }
+        subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         

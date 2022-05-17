@@ -21,11 +21,9 @@ struct MovieRequest: Codable, Hashable {
     }
 }
 
-
 struct MovieInfo: Codable, Hashable {
     
     let id: Int
-
     let title: String?
     let name: String?
     let originalTitle: String?

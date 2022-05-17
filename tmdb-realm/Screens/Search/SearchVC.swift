@@ -18,13 +18,16 @@ class SearchVC: UIViewController {
     var searchController = UISearchController(searchResultsController: nil)
     var searchTableView = UITableView()
     var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        applySnapshot()
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureTableView()
         configureSearchController()
-//        getSearchResults(query: "Matrix", page: 1)
     }
     
     private func applySnapshot() {
@@ -32,7 +35,6 @@ class SearchVC: UIViewController {
         snapshot.appendSections([.searchSection])
         snapshot.appendItems(self.searchResults)
         diffableDataSource.apply(snapshot, animatingDifferences: true)
-        print("updated data source")
     }
 }
 
