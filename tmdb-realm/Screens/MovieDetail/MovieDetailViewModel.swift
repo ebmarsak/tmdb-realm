@@ -25,7 +25,7 @@ final class MovieDetailViewModel {
         }
     }
     
-    // Button Functions
+    // Button Function
     func didTapAddToFavorites() {
         try! realm.write({
             let movie = RLMMovie()
@@ -35,9 +35,7 @@ final class MovieDetailViewModel {
             realm.add(movie, update: .modified)
             print("Name: \(movie.title) ID: \(movie.id) || Added to realm")
         })
-        self.delegate?.didAddNewItem()
+        self.delegate?.updateRealmDB()
     }
-    
-
 }
 

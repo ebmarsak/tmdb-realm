@@ -44,7 +44,6 @@ extension SearchVC: UITableViewDelegate {
         guard let selectedItem = diffableDataSource.itemIdentifier(for: indexPath) else { return }
         
         navigationController?.pushViewController(MovieDetailVC(movie: selectedItem), animated: true)
-        // TODO: route movie detail
     }
     
     private func configureTableView() {

@@ -111,7 +111,7 @@ class MovieCustomCell: UITableViewCell {
 }
 
 extension MovieCustomCell: MovieDetailDelegate {
-    func didAddNewItem() {
+    func updateRealmDB() {
         alreadyFavoritedButton.isHidden = false
     }
 }

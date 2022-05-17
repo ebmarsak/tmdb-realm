@@ -10,7 +10,7 @@ import RealmSwift
 //import AVFoundation
 
 protocol MovieDetailDelegate : AnyObject {
-    func didAddNewItem()
+    func updateRealmDB()
 }
 
 class MovieDetailVC: UIViewController {
@@ -42,11 +42,14 @@ class MovieDetailVC: UIViewController {
         setViewProperties()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        let sizeOfSV = self.movieDetailView.titleName.bounds.height + self.movieDetailView.overview.bounds.height + self.movieDetailView.addToFavoritesButton.bounds.height
+    override func viewWillDisappear(_ animated: Bool) {
         
-        movieDetailView.scrollView.contentSize.height = sizeOfSV + 80
-        print("\(sizeOfSV)")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let sizeOfSV = self.movieDetailView.titleName.bounds.height + self.movieDetailView.overview.bounds.height + self.movieDetailView.addToFavoritesButton.bounds.height + 80
+        
+        movieDetailView.scrollView.contentSize.height = sizeOfSV
     }
     
     // Set properties
@@ -61,7 +64,7 @@ class MovieDetailVC: UIViewController {
 }
 
 extension MovieDetailVC: MovieDetailDelegate {
-    func didAddNewItem() { }
+    func updateRealmDB() { }
 }
 
 extension MovieDetailVC: MovieDetailViewDelegate {

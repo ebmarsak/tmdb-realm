@@ -14,11 +14,11 @@ protocol FavoritesViewModelDelegate : AnyObject { }
 final class FavoritesViewModel {
     
     weak var delegate: FavoritesViewModelDelegate?
+
+    var diffableDataSource : UITableViewDiffableDataSource<Section, RLMMovie>!
     let realm = try! Realm()
     
     var favoriteMovies: [RLMMovie] = []
-    
-    var diffableDataSource : UITableViewDiffableDataSource<Section, RLMMovie>!
     
     init() {
         let realmData = realm.objects(RLMMovie.self)
@@ -55,7 +55,7 @@ final class FavoritesViewModel {
 
 // Protocol functions
 extension FavoritesViewModel : MovieDetailDelegate {
-    func didAddNewItem() {
+    func updateRealmDB() {
         let realmData = realm.objects(RLMMovie.self)
         self.favoriteMovies = Array(realmData)
         self.updateDataSource(diffableDataSource: self.diffableDataSource)

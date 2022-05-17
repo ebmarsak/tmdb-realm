@@ -27,6 +27,13 @@ class TrendingVC: UIViewController {
 //        >> path for realm db <<
 //        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        var snp = trendingViewModel.diffableDataSource.snapshot()
+        snp.reloadItems(self.trendingViewModel.trendingMovies)
+        trendingViewModel.diffableDataSource.apply(snp, animatingDifferences: true)
+        print("reloadItems")
+    }
 }
 
 // MARK: TableView Configuration
@@ -65,6 +72,7 @@ extension TrendingVC : UITableViewDelegate{
     }
 }
 
+// MARK: Delegation
 extension TrendingVC: TrendingViewModelDelegate {
     func didFetchMovieDetails() {
     }

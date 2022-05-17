@@ -22,12 +22,11 @@ class FavoritesVC: UIViewController, FavoritesViewModelDelegate {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         favoritesViewModel.delegate = self
-
         configureTableview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        favoritesViewModel.didAddNewItem()
+        favoritesViewModel.updateRealmDB()
     }
 }
 
@@ -51,10 +50,9 @@ extension FavoritesVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         favoritesTableView.deselectRow(at: indexPath, animated: true)
         let currentCell = favoritesTableView.cellForRow(at: indexPath) as! FavoritesCustomCell
-        // Remove item confirmation alert and related realm + diffableDataSource operations
+        // Alert and related database operations
         self.present(favoritesViewModel.didTapFavoriteCell(tappedCell: currentCell, indexPath: indexPath), animated: true, completion: nil)
     }
 }

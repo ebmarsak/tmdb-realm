@@ -7,20 +7,17 @@
 
 import Foundation
 import UIKit
-import RealmSwift
 
 protocol TrendingViewModelDelegate: AnyObject {
     func didFetchMovieDetails()
 }
 
 final class TrendingViewModel {
-    
     weak var delegate: TrendingViewModelDelegate?
-    let realm = try! Realm()
     var trendingMovies: [MovieInfo] = []
     var diffableDataSource : UITableViewDiffableDataSource<Section, MovieInfo>!
     
-    
+    // Chose color for voteAverage
     func voteAverageColorCheck(voteAverage: Double) -> UIColor {
         if voteAverage < 4.0 {
             return .systemRed

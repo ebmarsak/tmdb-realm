@@ -13,7 +13,6 @@ protocol MovieDetailViewDelegate : AnyObject {
 }
 
 class MovieDetailView: UIView {
-    
     var backdropImage = UIImageView()
     var titleName = UILabel()
     var releaseDate = UILabel()
@@ -29,14 +28,6 @@ class MovieDetailView: UIView {
         super.init(frame: frame)
         backgroundColor = .systemBackground
         configLayout()
-        
-//        let sizeOfSV = titleName.bounds.height + overview.bounds.height + addToFavoritesButton.bounds.height
-//        print("\(sizeOfSV)")
-        
-//        scrollView.contentSize.height = 1000
-        
-//        scrollView.contentSize = CGSize(width: frame.width, height: scrollView.contentSize.height)
-
     }
     
     required init?(coder: NSCoder) {

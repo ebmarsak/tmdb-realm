@@ -98,7 +98,6 @@
 		C64FD32D2824F03200DFCA85 /* tmdb-realm */ = {
 			isa = PBXGroup;
 			children = (
-				C6FA31F5282908A7001DA218 /* CustomView */,
 				C64FD351282514E300DFCA85 /* Screens */,
 				C64FD3482824FAD200DFCA85 /* Service */,
 				C64FD3442824F82000DFCA85 /* Model */,
@@ -133,6 +132,7 @@
 		C64FD351282514E300DFCA85 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C6FA31F5282908A7001DA218 /* CustomView */,
 				C635F79E282A82E900F945CB /* MovieDetail */,
 				C64FD3542825151200DFCA85 /* Favorites */,
 				C64FD3532825150A00DFCA85 /* Trending */,
